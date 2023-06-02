@@ -41,7 +41,9 @@ DIR_INCLUDES = ./inc/
 SRCS =			$(DIR_MANDATORY)main.c \
 				$(DIR_MANDATORY)execution.c \
 				$(DIR_MANDATORY)parsing.c \
-				$(DIR_MANDATORY)wait.c
+				$(DIR_MANDATORY)wait.c \
+				$(DIR_MANDATORY)error.c
+
 OBJS = $(SRCS:$(DIR_MANDATORY)%.c=$(DIR_OBJ)%.o)
 
 all :			makelib $(NAME)

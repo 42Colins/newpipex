@@ -4,7 +4,7 @@
 char	*find_path(t_cmd *cmd);
 void    free_split(char **str);
 
-t_cmd   parse_cmds(t_cmd *cmd, int runner, char **argv, char **env)
+void    parse_cmds(t_cmd *cmd, int runner, char **argv, char **env)
 {
 	cmd->error = 0;
 	cmd->path_env = find_env_path(env);
@@ -14,15 +14,14 @@ t_cmd   parse_cmds(t_cmd *cmd, int runner, char **argv, char **env)
 	cmd->path = find_path(cmd);
 	if (cmd->path == NULL)
 		cmd->error = -2;
-	return (*cmd);
 }
 
-t_info  global_parse(t_info *global_info, char **argv, int argc)
+void  global_parse(t_info *global_info, char **argv, int argc)
 {
 	global_info->nb_cmds = argc - 3;
 	global_info->infile = argv[1];
 	global_info->outfile = argv[argc - 1];
-	return (*global_info);
+	global_info->infilefd = -1;
 }
 
 char	*find_path(t_cmd *cmd)

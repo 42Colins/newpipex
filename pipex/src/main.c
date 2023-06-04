@@ -1,14 +1,22 @@
-//
-// Created by cprojean on 6/1/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/04 17:35:52 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/04 17:37:19 by cprojean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/pipex.h"
 
-void    print_all(t_cmd *cmd, t_info *global_info);
-
+void	print_all(t_cmd *cmd, t_info *global_info);
 
 int	main(int argc, char **argv, char **env)
 {
-	int	runner;
+	int		runner;
 	t_cmd	*cmd;
 	t_info	global_info;
 
@@ -20,7 +28,7 @@ int	main(int argc, char **argv, char **env)
 	cmd = ft_calloc(argc - 3, sizeof(t_cmd));
 	global_parse(&global_info, argv, argc);
 	runner = 0;
-	while(runner < argc - 3)
+	while (runner < argc - 3)
 	{
 		parse_cmds(&cmd[runner], runner, argv, env);
 		runner++;
@@ -30,12 +38,10 @@ int	main(int argc, char **argv, char **env)
 	free_cmd(cmd, &global_info);
 }
 
-void    print_all(t_cmd *cmd, t_info *global_info)
+void	print_all(t_cmd *cmd, t_info *global_info)
 {
 	ft_printf("%s\n", cmd->cmd[0]);
 	ft_printf("%s\n", cmd->path);
 	ft_printf("%s\n", global_info->infile);
 	ft_printf("%s\n", global_info->outfile);
 }
-//			if (cmd[runner]->error != 0)
-//				parsing_error(cmd[runner]);

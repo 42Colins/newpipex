@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:23:08 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 17:49:56 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:19:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ void	open_in_failed(t_cmd *cmd, t_info *global_info);
 void	ft_error(char *s1);
 void	ft_error2(char *s1, char *s2);
 void	free_split(char **str);
+int		is_slash(char *str);
+
 
 #endif

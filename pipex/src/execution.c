@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:29:41 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 17:57:42 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 19:37:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd);
 int		dup_in(t_cmd cmd, t_info global_info, int runner);
 int		dup_out(t_info global_info, int runner, int *fd);
-void	free_tab(char **str);
-int		close_fds(t_cmd *cmd, t_info *global_info, int *fd);
+void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd);
+
 
 void	do_exec(t_cmd *cmd, t_info *global_info)
 {
@@ -33,7 +33,7 @@ void	do_exec(t_cmd *cmd, t_info *global_info)
 			return ;
 		if (cmd[runner].pid == 0)
 		{
-			if_child(cmd[runner], global_info, runner);
+			if_child(cmd, global_info, runner, fd);
 		}
 		else
 		{
@@ -46,7 +46,7 @@ void	do_exec(t_cmd *cmd, t_info *global_info)
 	close(fd[0]);
 }
 
-void	if_child(t_cmd cmd, t_info global_info, int runner)
+void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 {
 	if (runner == 0)
 	{
@@ -65,7 +65,7 @@ void	if_child(t_cmd cmd, t_info global_info, int runner)
 			free_cmd(cmd, global_info), exit(1));
 	}
 	if (cmd_exec(&cmd[runner], runner, *global_info, fd) != 0)
-		return (free_cmd(cmd, global_info), exit(1));
+		return (exit(1));
 }
 
 int	cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd)
@@ -78,7 +78,7 @@ int	cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd)
 	if (cmd->path == NULL)
 		return (ft_error2("Command not found : ", cmd->cmd[0]), -1);
 	if (execve(cmd->path, cmd->cmd, cmd->path_env) == -1)
-		return (-1);
+		return (free_cmd(cmd, &global_info), exit(1), -1);
 	return (0);
 }
 

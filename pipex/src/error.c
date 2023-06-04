@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:37:35 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 17:51:46 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 19:27:57 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ void	free_cmd(t_cmd *cmd, t_info *global_info)
 	runner = 0;
 	while (runner < global_info->nb_cmds)
 	{
-		free(cmd[runner].path);
-		free_tab(cmd[runner].cmd);
+		if (cmd[runner].cmd[0] == cmd[runner].path)
+			free_tab(cmd[runner].cmd);
+		else
+		{
+			free_tab(cmd[runner].cmd);
+			free(cmd[runner].path);
+		}
 		free_tab(cmd[runner].path_env);
 		close(cmd[runner].fdin);
 		runner++;
@@ -65,8 +70,21 @@ void	free_tab(char **str)
 	runner = 0;
 	while (str[runner])
 	{
-		free(str[runner]);
+		if (str[runner] != NULL)
+			free(str[runner]);
 		runner++;
 	}
 	free(str);
+}
+
+int	is_slash(char *str)
+{
+	while (*str)
+	{
+		if (*str == '/')
+			return (1);
+		else
+			str++;
+	}
+	return (0);
 }

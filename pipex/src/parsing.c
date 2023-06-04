@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:27:44 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 17:49:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:27:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ char	*find_path(t_cmd *cmd)
 	int		runner;
 
 	runner = 0;
-	if (access(cmd->cmd[0], F_OK | X_OK) == 0)
+	if (is_slash(cmd->cmd[0]) && access(cmd->cmd[0], F_OK | X_OK) == 0)
 		return (cmd->cmd[0]);
+	if (is_slash(cmd->cmd[0]))
+		return (NULL);
 	if (cmd->cmd != NULL)
 	{
 		while (cmd->path_env[runner])

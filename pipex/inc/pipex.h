@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:23:08 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 18:19:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:06:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_cmd{
 	char	**cmd;
 	char	*path;
 	char	**path_env;
-	int		error;
 	int		pid;
 	int		fdin;
+	int		error;
 }	t_cmd;
 
 typedef struct s_information

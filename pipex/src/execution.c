@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:29:41 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 19:37:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:17:56 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 			return (ft_error(strerror(errno)), \
 			free_cmd(cmd, global_info), exit(1));
 	}
-	if (cmd_exec(&cmd[runner], runner, *global_info, fd) != 0)
+	if (cmd_exec(&cmd[runner], runner, *global_info, fd) != 0  || cmd[runner].error != 0)
 		return (exit(1));
 }
 

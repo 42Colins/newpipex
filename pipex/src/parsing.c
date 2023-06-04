@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:27:44 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 18:27:43 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:21:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	parse_cmds(t_cmd *cmd, int runner, char **argv, char **env)
 	cmd->error = 0;
 	cmd->path_env = find_env_path(env);
 	cmd->cmd = ft_split(argv[runner + 2], ' ');
-	if (!cmd->cmd)
-		cmd->error = -1;
+	if (!cmd->cmd || !cmd->cmd[0])
+		return ;
 	cmd->path = find_path(cmd);
 	if (cmd->path == NULL)
 		cmd->error = -2;
@@ -85,7 +85,7 @@ char	**find_env_path(char **env)
 void	parsing_error(t_cmd *cmd)
 {
 	if (cmd->error == -1)
-		ft_putstr_fd("Split broke\n", 2);
+		ft_putstr_fd("Error : Command not found\n", 2);
 	if (cmd->error == -2)
 	{
 		ft_putstr_fd("Error : Command not found\n", 2);

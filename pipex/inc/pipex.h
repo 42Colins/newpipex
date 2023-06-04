@@ -32,7 +32,9 @@ char	**find_env_path(char **env);
 void    wait_all(t_cmd *cmd, t_info *global_info);
 void free_cmd(t_cmd *cmd, t_info *global_info);
 void free_a_bit(t_info *global_info);
-
-
+int     close_fds(t_cmd *cmd, t_info *global_info, int *fd);
+void open_in_failed(t_cmd *cmd, t_info *global_info);
+void    ft_error(char *s1);
+void    ft_error2(char *s1, char *s2);
 
 #endif

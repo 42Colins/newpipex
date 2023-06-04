@@ -22,6 +22,7 @@ void  global_parse(t_info *global_info, char **argv, int argc)
 	global_info->infile = argv[1];
 	global_info->outfile = argv[argc - 1];
 	global_info->infilefd = -1;
+    global_info->outfilefd = -1;
 }
 
 char	*find_path(t_cmd *cmd)

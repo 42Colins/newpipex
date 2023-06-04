@@ -104,6 +104,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 //ft_strjoin
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin2(char *s1, char *s2);
 
 //ft_strtrim
 char	*ft_strtrim(char const *s1, char const *set);

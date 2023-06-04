@@ -39,3 +39,28 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	array[runner + sizearray] = '\0';
 	return (array);
 }
+
+char	*ft_strjoin2(char *s1, char *s2)
+{
+    size_t	runner;
+    char	*array;
+
+    runner = 0;
+    array = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+    if (!array)
+        return (NULL);
+    while (runner < ft_strlen(s1))
+    {
+        array[runner] = s1[runner];
+        runner++;
+    }
+    runner = 0;
+    while (runner < ft_strlen(s2))
+    {
+        array[runner + ft_strlen(s1)] = s2[runner];
+        runner++;
+    }
+    array[runner + ft_strlen(s1)] = '\0';
+    free(s1);
+    return (array);
+}

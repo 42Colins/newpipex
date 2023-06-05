@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/25 15:04:51 by cprojean          #+#    #+#              #
-#    Updated: 2023/06/05 10:18:04 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/05 13:23:07 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRCS =			$(DIR_MANDATORY)main.c \
 				$(DIR_MANDATORY)execution.c \
 				$(DIR_MANDATORY)parsing.c \
 				$(DIR_MANDATORY)wait.c \
+				$(DIR_MANDATORY)errors.c \
 				$(DIR_MANDATORY)error.c
+
 
 OBJS = $(SRCS:$(DIR_MANDATORY)%.c=$(DIR_OBJ)%.o)
 
@@ -54,7 +56,9 @@ SRCS_BONUS =		$(DIR_BONUS)main_bonus.c \
 					$(DIR_BONUS)wait_bonus.c \
 					$(DIR_BONUS)execution_bonus.c \
 					$(DIR_BONUS)parsing_bonus.c \
+					$(DIR_BONUS)errors_bonus.c \
 					$(DIR_BONUS)error_bonus.c
+
 
 OBJS_BONUS = $(SRCS_BONUS:$(DIR_BONUS)%.c=$(DIR_OBJ)%.o)
 				

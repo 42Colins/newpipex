@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:29:41 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/05 09:47:19 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:11:26 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 		global_info->infilefd = open(global_info->infile, O_RDONLY);
 		if (global_info->infilefd == -1)
 			return (ft_error(strerror(errno)), \
-			open_in_failed(cmd, global_info), exit(1));
+			free_cmd(cmd, global_info), double_close(fd), exit(1));
 		cmd[0].fdin = global_info->infilefd;
 	}
 	else if (runner + 1 == global_info->nb_cmds)
@@ -61,7 +61,7 @@ void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 		O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (global_info->outfilefd == -1)
 			return (ft_error(strerror(errno)), \
-			free_cmd(cmd, global_info), exit(1));
+			free_cmd(cmd, global_info), double_close(fd), exit(1));
 	}
 	if (cmd[runner].error == -1 || \
 		cmd_exec(&cmd[runner], runner, *global_info, fd) != 0)
@@ -71,14 +71,17 @@ void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 int	cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd)
 {
 	if (dup_in(*cmd, global_info, runner) != 0)
-		return (ft_putstr_fd(strerror(errno), 2), -1);
+		return (ft_putstr_fd(strerror(errno), 2), free_cmd(cmd, &global_info), \
+		exit(1), -1);
 	if (dup_out(global_info, runner, fd) != 0)
-		return (ft_putstr_fd(strerror(errno), 2), -1);
+		return (ft_putstr_fd(strerror(errno), 2), free_cmd(cmd, &global_info), \
+		exit(1), -1);
 	close_fds(cmd, &global_info, fd);
 	if (cmd->path == NULL)
-		return (ft_error2("Command not found : ", cmd->cmd[0]), -1);
+		return (ft_error2("Command not found : ", \
+		cmd->cmd[0]), free_cmd(cmd, &global_info), exit(1), -1);
 	if (execve(cmd->path, cmd->cmd, cmd->path_env) == -1)
-		return (free_cmd(cmd, &global_info), exit(1), -1);
+		return (free_on_error(&global_info, cmd, runner), exit(1), -1);
 	return (0);
 }
 

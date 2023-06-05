@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:23:08 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/05 09:05:44 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:10:59 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,10 @@ void	ft_error(char *s1);
 void	ft_error2(char *s1, char *s2);
 void	free_split(char **str);
 int		is_slash(char *str);
+void	free_tab(char **str);
+void	free_on_error(t_info *global_info, t_cmd *cmd, int index);
+void	double_close(int *fd);
+
+
 
 #endif

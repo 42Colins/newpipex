@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:29:41 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/04 20:46:09 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/05 09:47:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd);
 int		dup_in(t_cmd cmd, t_info global_info, int runner);
 int		dup_out(t_info global_info, int runner, int *fd);
 void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd);
-
 
 void	do_exec(t_cmd *cmd, t_info *global_info)
 {
@@ -32,11 +31,11 @@ void	do_exec(t_cmd *cmd, t_info *global_info)
 		if (cmd[runner].pid == -1)
 			return ;
 		if (cmd[runner].pid == 0)
-		{
 			if_child(cmd, global_info, runner, fd);
-		}
 		else
 		{
+			if (cmd[runner].fdin)
+				close(cmd[runner].fdin);
 			if (runner + 1 < global_info->nb_cmds)
 				cmd[runner + 1].fdin = fd[0];
 			close(fd[1]);
@@ -64,8 +63,9 @@ void	if_child(t_cmd *cmd, t_info *global_info, int runner, int *fd)
 			return (ft_error(strerror(errno)), \
 			free_cmd(cmd, global_info), exit(1));
 	}
-	if (cmd_exec(&cmd[runner], runner, *global_info, fd) != 0  || cmd[runner].error == -1)
-		return (ft_putstr_fd("agdslqw", 2), free_cmd(cmd, global_info), exit(1));
+	if (cmd[runner].error == -1 || \
+		cmd_exec(&cmd[runner], runner, *global_info, fd) != 0)
+		return (free_cmd(cmd, global_info), exit(1));
 }
 
 int	cmd_exec(t_cmd *cmd, int runner, t_info global_info, int *fd)

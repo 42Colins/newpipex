@@ -3,22 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
+#    By: cprojean <cprojean@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/25 15:04:51 by cprojean          #+#    #+#              #
-#    Updated: 2023/06/01 11:05:10 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/05 10:18:04 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-NAME_BONUS = pipex
-
-NAME_SANITIZE = pipex_sanitize
+NAME_BONUS = pipex_bonus
 
 CFLAGS = -Wall -Wextra -Werror -g3 
-
-SANITIZEFLAGS = -fsanitize=address
 
 RM = $(RM) -f
 
@@ -32,9 +28,9 @@ RM = rm -rf
 
 DIR_OBJ = ./.obj/
 
-DIR_MANDATORY = ./src/
+DIR_MANDATORY = ./mandatory/
 
-DIR_BONUS = ./bonus_part/
+DIR_BONUS = ./bonus/
 
 DIR_INCLUDES = ./inc/
 
@@ -50,17 +46,15 @@ all :			makelib $(NAME)
 
 $(DIR_OBJ):
 				mkdir $@
-				
+
 $(DIR_OBJ)%.o: $(DIR_MANDATORY)%.c $(LIB) $(HEADERS) | $(DIR_OBJ)
 				$(CC) $(CFLAGS) -c $< -o $@
 				
-SRCS_BONUS =		$(DIR_BONUS)pipex_bonus.c \
+SRCS_BONUS =		$(DIR_BONUS)main_bonus.c \
 					$(DIR_BONUS)wait_bonus.c \
-					$(DIR_BONUS)exec_bonus.c \
-					$(DIR_BONUS)utils_bonus.c \
-					$(DIR_BONUS)pipe_bonus.c \
+					$(DIR_BONUS)execution_bonus.c \
+					$(DIR_BONUS)parsing_bonus.c \
 					$(DIR_BONUS)error_bonus.c
-
 
 OBJS_BONUS = $(SRCS_BONUS:$(DIR_BONUS)%.c=$(DIR_OBJ)%.o)
 				
@@ -70,13 +64,10 @@ $(DIR_OBJ)%.o: $(DIR_BONUS)%.c $(LIB) $(HEADERS) | $(DIR_OBJ)
 $(NAME) :		$(LIB) $(OBJS)
 				$(CC) $(OBJS) -o $(NAME) -L./libft -lft
 
-bonus :		makelib $(LIB) $(OBJS_BONUS)
-				$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME) -L./libft -lft
+$(NAME_BONUS) : $(LIB) $(OBJS_BONUS)
+				$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS) -L./libft -lft
 
-$(NAME_SANITIZE) :		$(LIB) $(OBJS_BONUS)
-				$(CC) $(CFLAGS) $(SANITIZEFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS) -L./libft -lft
-
-bonussanitize : makelib $(NAME_SANITIZE)
+bonus :			makelib $(NAME_BONUS)
 
 makelib:
 				$(MAKE) -C libft
